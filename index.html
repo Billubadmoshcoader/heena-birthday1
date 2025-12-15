@@ -30,11 +30,10 @@ body{
 h1{ color:#5a2a27; }
 p{ color:#6a3a3a; font-size:18px; }
 
-input[type="date"]{
-  padding:12px;
+select{
+  padding:10px;
   font-size:16px;
   border-radius:10px;
-  border:1px solid #ccc;
 }
 
 button{
@@ -58,18 +57,37 @@ button:hover{
 <!-- PAGE 0 : CALENDAR -->
 <div class="page active">
   <h1>📅 Aaj ki Date Daalo</h1>
-  <p>hint: koi khaas din hai 😏</p>
-  <input type="date" id="datePick">
-  <button onclick="checkDate()">Next 💗</button>
+  <p>(hint: koi bahut khaas din 😏)</p>
+
+  <div>
+    <select id="day" onchange="showBtn()">
+      <option value="">Day</option>
+      <option value="15">15</option>
+    </select>
+
+    <select id="month" onchange="showBtn()">
+      <option value="">Month</option>
+      <option value="1">January</option>
+    </select>
+
+    <select id="year" onchange="showBtn()">
+      <option value="">Year</option>
+      <option value="2026">2026</option>
+    </select>
+  </div>
+
+  <button id="goBtn" onclick="checkDate()" style="display:none;">
+    Isko daba kr aage nikal 😌👉
+  </button>
 </div>
 
-<!-- PAGE 1 : BIRTHDAY MESSAGE -->
+<!-- PAGE 1 : BIRTHDAY -->
 <div class="page" id="birthdayPage">
   <h1>🎉 Aajjjj to Laadlee ka Birthdayyy 🎉</h1>
-  <p>Happy Birthday Yaadv Jii 💖🥰</p>
+  <p>Happy Birthday Yaadav Jii 💖🥰</p>
 </div>
 
-<!-- PAGE 2 : ORIGINAL START -->
+<!-- PAGE 2 : START -->
 <div class="page" id="startPage">
   <h1>🍫 Ek Chhoti Si Meethi Shuruaat 🍫</h1>
   <p>ab dhyaan se aage badhna 😌</p>
@@ -78,17 +96,22 @@ button:hover{
 <script>
 const pages = document.querySelectorAll('.page');
 
+function showBtn(){
+  const d = day.value, m = month.value, y = year.value;
+  if(d && m && y){
+    document.getElementById("goBtn").style.display = "inline-block";
+  }
+}
+
 function checkDate(){
-  const date = document.getElementById("datePick").value;
-
-  if(date === "2026-01-15"){
+  if(day.value==="15" && month.value==="1" && year.value==="2026"){
     pages[0].classList.remove("active");
-    document.getElementById("birthdayPage").classList.add("active");
+    birthdayPage.classList.add("active");
 
-    setTimeout(() => {
-      document.getElementById("birthdayPage").classList.remove("active");
-      document.getElementById("startPage").classList.add("active");
-    }, 2500);
+    setTimeout(()=>{
+      birthdayPage.classList.remove("active");
+      startPage.classList.add("active");
+    },2500);
 
   }else{
     alert("😜 Galat date hai… dobara try karo");
@@ -98,4 +121,3 @@ function checkDate(){
 
 </body>
 </html>
-
